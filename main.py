@@ -147,12 +147,12 @@ print("Exponential:", avg_ladder_exp_list)
 
 fig, ax = pyplot.subplots()
 x_labels = [i for i in range(1, 14)]
-ladder_line = ax.plot(x_labels, avg_ladder_list, label='Ladder', color="green")
+ladder_line = ax.plot(x_labels, avg_ladder_list, label='Ladder', color="red")
 binary_line = ax.plot(x_labels, avg_binary_list, label='Binary', color="blue")
-exp_line = ax.plot(x_labels, avg_ladder_exp_list, label='Exponential', color="red")
-red_patch = mpatches.Patch(color='green', label='Ladder')
+exp_line = ax.plot(x_labels, avg_ladder_exp_list, label='Exponential', color="green")
+red_patch = mpatches.Patch(color='red', label='Ladder')
 blue_patch = mpatches.Patch(color='blue', label='Binary')
-green_patch = mpatches.Patch(color='red', label='Exponential')
+green_patch = mpatches.Patch(color='green', label='Exponential')
 pyplot.legend(handles=[red_patch, blue_patch, green_patch])
 pyplot.yscale('log')
 if gen == 1:
