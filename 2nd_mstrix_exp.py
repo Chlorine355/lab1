@@ -23,6 +23,7 @@ def ladder_exp():
     global a, target, m
     x = 8191
     y = 0
+    found = False
     while y < m and x >= 0:
         if a[y][x] == target:
             found = True
@@ -43,7 +44,7 @@ def ladder_exp():
                 start = 0
 
             x = binsearch(y, start, x)
-    return False
+    return found
 
 
 n = 2 ** 13  # col number
