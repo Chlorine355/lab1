@@ -56,9 +56,11 @@ def ladder_exp():
     global a, target, m
     x = 8191
     y = 0
+    found = False
     while y < m and x >= 0:
         if a[y][x] == target:
-            return True
+            found = True
+            y += 1
 
         elif a[y][x] < target:
             y += 1
@@ -75,7 +77,7 @@ def ladder_exp():
                 start = 0
 
             x = binsearch(y, start, x)
-    return False
+    return found
 
 print("Введите 1 для линейных данных, 2 для экспоненциальных")
 gen = int(input("Генерация матрицы: "))
@@ -145,12 +147,12 @@ print("Exponential:", avg_ladder_exp_list)
 
 fig, ax = pyplot.subplots()
 x_labels = [i for i in range(1, 14)]
-ladder_line = ax.plot(x_labels, avg_ladder_list, label='Ladder', color="red")
+ladder_line = ax.plot(x_labels, avg_ladder_list, label='Ladder', color="green")
 binary_line = ax.plot(x_labels, avg_binary_list, label='Binary', color="blue")
-exp_line = ax.plot(x_labels, avg_ladder_exp_list, label='Exponential', color="green")
-red_patch = mpatches.Patch(color='red', label='Ladder')
+exp_line = ax.plot(x_labels, avg_ladder_exp_list, label='Exponential', color="red")
+red_patch = mpatches.Patch(color='green', label='Ladder')
 blue_patch = mpatches.Patch(color='blue', label='Binary')
-green_patch = mpatches.Patch(color='green', label='Exponential')
+green_patch = mpatches.Patch(color='red', label='Exponential')
 pyplot.legend(handles=[red_patch, blue_patch, green_patch])
 pyplot.yscale('log')
 if gen == 1:

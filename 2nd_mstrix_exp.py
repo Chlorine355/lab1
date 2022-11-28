@@ -25,7 +25,8 @@ def ladder_exp():
     y = 0
     while y < m and x >= 0:
         if a[y][x] == target:
-            return True
+            found = True
+            y += 1
 
         elif a[y][x] < target:
             y += 1
