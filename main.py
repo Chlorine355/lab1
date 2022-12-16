@@ -3,20 +3,48 @@ from matplotlib import pyplot
 import matplotlib.patches as mpatches
 
 
-def binsearch(ind, low, high):
-    mid = 0
-    while low <= high:
-        mid = (low + high) // 2
-        if a[ind][mid] < target:
-            low = mid + 1
+def binary_row(row, low, high):
+    global a, target
+    if high >= low:
+        mid = low + (high - low)//2
+        if a[row][mid] == target:
+            return 1
+        elif a[row][mid] > target:
+            return binary_row(row, low, mid-1)
+        else:
+            return binary_row(row, mid + 1, high)
+    else:
+        elem = max(high, 0)
+        return elem
 
-        elif a[ind][mid] > target:
-            high = mid - 1
+
+def exp_row(row, start):
+    global a, target
+    if a[row][start] == target:
+        return 1
+    i = 1
+    n = start - i
+    while n > 0 and a[row][n] >= target:
+        i = i * 2
+        n = start-i
+    return binary_row(row, max(n, 0), start - i // 2)
+
+
+def ladder_exp():
+    global n, m, a, target
+    x = n-1
+    y = 0
+    while 0 <= x < n and 0 <= y < m:
+        if a[y][x] > target and x >= 1:
+            x = exp_row(y, x)
+        elif a[y][x] < target and y <= m - 2:
+            y += 1
+        elif a[y][x] == target:
+            return 1
 
         else:
-            return -1
-
-    return (low + high) // 2
+            return 0
+    return 0
 
 
 def ladder():
@@ -51,33 +79,6 @@ def binary():
         continue
     return False
 
-
-def ladder_exp():
-    global a, target, m
-    x = 8191
-    y = 0
-    found = False
-    while y < m and x >= 0:
-        if a[y][x] == target:
-            found = True
-            y += 1
-
-        elif a[y][x] < target:
-            y += 1
-
-        elif a[y][x] > target:
-            step = 1
-            start = j
-
-            while start >= 0 and a[y][x] > target:
-                start -= step
-                step *= 2
-
-            if start < 0:
-                start = 0
-
-            x = binsearch(y, start, x)
-    return found
 
 print("Введите 1 для линейных данных, 2 для экспоненциальных")
 gen = int(input("Генерация матрицы: "))
@@ -137,7 +138,6 @@ for power in range(1, 14):
     avg_ladder_exp_list.append(avg_ladder_exp_time)
 
     print()
-
 
     # run 3 algorithms 3 times each and measure time
 
